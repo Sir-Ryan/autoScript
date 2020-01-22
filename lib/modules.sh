@@ -107,16 +107,18 @@ capture-packets() {
     read -p "File to save as (default is WiFi name): " FILE3
     if [ -z $FILE3 ]
     then
-    FILE3=$CHOSEN_SCAN
+    FILE3="$CHOSEN_SCAN"
     fi
     clear
     echo "Processing"
+    cd "$PERM_DIR"
     airodump-ng --bssid $BSSID3 -c $CHANNEL3 -w $FILE3 $INTERFACE
-    mv "$FILE3"-01.cap Captured-packets
-    rm "$FILE3"-01.csv
-    rm "$FILE3"-01.kismet.csv
-    rm "$FILE3"-01.kismet.netxml
-    rm "$FILE3"-01.log.csv
+    mv $FILE3-01.cap $FILE3.cap
+    mv $FILE3.cap Captured-Packets/
+    rm $FILE3-01.csv
+    rm $FILE3-01.kismet.csv
+    rm $FILE3-01.kismet.netxml
+    rm $FILE3-01.log.csv
     ifconfig "$INTERFACE" down
     iwconfig "$INTERFACE" mode managed
     ifconfig "$INTERFACE" up

@@ -2,7 +2,7 @@
 edit-menu() {
 clear
     figlet File Manager
-    echo -e "\e[0;36m-------------------------\e[0m \e[1;33mEdit Files\e[0m \e[0;36m-------------------------\e[0m"
+    echo -e "\e[0;36m------------------------\e[0m \e[1;33mEdit Files\e[0m \e[0;36m------------------------\e[0m"
     echo ""
     echo "1) Edit Handshakes"
     echo "2) Edit PMKIDs"
@@ -31,7 +31,7 @@ clear
     edit-password
     elif [ $INPUT == 5 ]
     then
-    main-choice-4
+    main-menu
     else
     echo ""
     echo "Not an Option"
@@ -42,7 +42,7 @@ clear
 
 edit-handshake() {
     cd Handshake
-    ls -1 | grep -v "temp.txt" > temp.txt
+    ls *.cap -1 | grep -v "temp.txt" > temp.txt
     mapfile -t FILE <temp.txt
     rm temp.txt
     cd ..
@@ -62,10 +62,9 @@ show-results-1() {
     fi
     if [ -z ${FILE[0]} ]
     then
-    echo ""
     echo "No Files Found!"
     sleep 2
-    main-choice-4
+    edit-menu
     else 
     echo "1) ${FILE[0]}"
     fi
@@ -218,11 +217,7 @@ show-results-1() {
     CHOSEN_FILE=${FILE[19]}
     elif [ $SELECT1 == 0 ]
     then
-    main-choice-4
-    
-    elif [ $SELECT1 == 0 ]
-    then
-    main-choice-4
+    edit-menu
 
     else
     echo ""
@@ -254,7 +249,7 @@ edit-handshake-action() {
     echo "5) Back"
     echo ""
     read -n 1 -p "Select Option: " ACTION1
-    cd Handshake
+    cd "$PERM_DIR"/Handshake
     if [ -z $ACTION1 ]
     then
     echo ""
@@ -268,14 +263,14 @@ edit-handshake-action() {
     echo ""
     echo "File has been deleted"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION1 == 2 ]
     then
     mv "$CHOSEN_FILE" ~
     cd ..
     echo "File has been moved to root directory"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION1 == 3 ]
     then
     cp "$CHOSEN_FILE" ~
@@ -283,7 +278,7 @@ edit-handshake-action() {
     echo ""
     echo "File has been copied to root directory"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION1 == 4 ]
     then
     rename1() {
@@ -297,11 +292,12 @@ edit-handshake-action() {
         sleep 2
         rename1
         else
-        mv "$CHOSEN_FILE" "$NEWNAME"
+        mv "$CHOSEN_FILE" "$NEWNAME".cap
         cd ..
-        echo "File now named $NEWNAME"
+        echo ""
+        echo "File has been renamed"
         sleep 2
-        main-menu
+        edit-menu
         fi
     }
     rename1
@@ -318,7 +314,7 @@ edit-handshake-action() {
 
 edit-pmkid() {
     cd PMKID
-    ls -1 | grep -v "temp.txt" > temp.txt
+    ls *.16800 -1 | grep -v "temp.txt" > temp.txt
     mapfile -t FILE2 <temp.txt
     rm temp.txt
     cd ..
@@ -329,9 +325,9 @@ edit-pmkid() {
 show-results-2() {
     clear
     figlet Edit PMKIDs
-    echo -e "\e[0;36m----------------------\e[0m \e[1;33mSelect a F0ile to Edit\e[0m \e[0;36m---------------------\e[0m"
+    echo -e "\e[0;36m---------------\e[0m \e[1;33mSelect a File to Edit\e[0m \e[0;36m--------------\e[0m"
     echo ""
-    if [ ! -z ${FILE[20]} ]
+    if [ ! -z ${FILE2[20]} ]
     then
     echo -e "\e[1;31mWARNING:\e[0m Some files are not being displayed"
     echo ""
@@ -339,9 +335,9 @@ show-results-2() {
     if [ -z ${FILE2[0]} ]
     then
     echo ""
-    echo "No F0iles Found!"
+    echo "No Files Found!"
     sleep 2
-    main-choice-4
+    edit-menu
     else 
     echo "1) ${FILE2[0]}"
     fi
@@ -494,11 +490,11 @@ show-results-2() {
     CHOSEN_FILE2=${FILE2[19]}
     elif [ $SELECT2 == 0 ]
     then
-    main-choice-4
+    edit-menu
     
     elif [ $SELECT2 == 0 ]
     then
-    main-choice-4
+    edit-menu
 
     else
     echo ""
@@ -523,14 +519,14 @@ edit-pmkid-action() {
     echo ""
     echo -e "\e[0;36m---------\e[0m \e[1;33mChoose Action\e[0m \e[0;36m--------\e[0m"
     echo ""
-    echo "1) Delete F0ile"
-    echo "2) Move F0ile"
-    echo "3) Copy F0ile"
-    echo "4) Rename F0ile"
+    echo "1) Delete File"
+    echo "2) Move File"
+    echo "3) Copy File"
+    echo "4) Rename File"
     echo "5) Back"
     echo ""
     read -n 1 -p "Select Option: " ACTION2
-    cd Handshake
+    cd "$PERM_DIR"/PMKID
     if [ -z $ACTION2 ]
     then
     echo ""
@@ -542,30 +538,31 @@ edit-pmkid-action() {
     rm "$CHOSEN_FILE2"
     cd ..
     echo ""
-    echo "F0ile has been deleted"
+    echo "File has been deleted"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION2 == 2 ]
     then
     mv "$CHOSEN_FILE2" ~
     cd ..
-    echo "F0ile has been moved to root directory"
+    echo ""
+    echo "File has been moved to root directory"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION2 == 3 ]
     then
     cp "$CHOSEN_FILE2" ~
     cd ..
     echo ""
-    echo "F0ile has been copied to root directory"
+    echo "File has been copied to root directory"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION2 == 4 ]
     then
     rename2() {
         clear
         echo ""
-        read -p "Enter F0ile Name: " NEWNAME
+        read -p "Enter File Name: " NEWNAME
         if [ -z $NEWNAME ]
         then
         echo ""
@@ -573,11 +570,11 @@ edit-pmkid-action() {
         sleep 2
         rename2
         else
-        mv "$CHOSEN_FILE2" "$NEWNAME"
+        mv "$CHOSEN_FILE2" "$NEWNAME".16800
         cd ..
-        echo "F0ile now named $NEWNAME"
+        echo "File has been renamed"
         sleep 2
-        main-menu
+        edit-menu
         fi
     }
     rename2
@@ -594,7 +591,7 @@ edit-pmkid-action() {
 
 edit-packets() {
     cd Captured-Packets
-    ls -1 | grep -v "temp.txt" > temp.txt
+    ls *.cap -1 | grep -v "temp.txt" > temp.txt
     mapfile -t FILE3 <temp.txt
     rm temp.txt
     cd ..
@@ -604,10 +601,10 @@ edit-packets() {
 
 show-results-3() {
     clear
-    figlet Edit PMKIDs
-    echo -e "\e[0;36m----------------------\e[0m \e[1;33mSelect a F0ile to Edit\e[0m \e[0;36m---------------------\e[0m"
+    figlet Edit Packets
+    echo -e "\e[0;36m----------------------\e[0m \e[1;33mSelect a File to Edit\e[0m \e[0;36m---------------------\e[0m"
     echo ""
-    if [ ! -z ${FILE[20]} ]
+    if [ ! -z ${FILE3[20]} ]
     then
     echo -e "\e[1;31mWARNING:\e[0m Some files are not being displayed"
     echo ""
@@ -615,9 +612,9 @@ show-results-3() {
     if [ -z ${FILE3[0]} ]
     then
     echo ""
-    echo "No F0iles Found!"
+    echo "No Files Found!"
     sleep 2
-    main-choice-4
+    edit-menu
     else 
     echo "1) ${FILE3[0]}"
     fi
@@ -770,11 +767,11 @@ show-results-3() {
     CHOSEN_FILE3=${FILE3[19]}
     elif [ $SELECT3 == 0 ]
     then
-    main-choice-4
+    edit-menu
     
     elif [ $SELECT3 == 0 ]
     then
-    main-choice-4
+    edit-menu
 
     else
     echo ""
@@ -799,14 +796,14 @@ edit-packets-action() {
     echo ""
     echo -e "\e[0;36m---------\e[0m \e[1;33mChoose Action\e[0m \e[0;36m--------\e[0m"
     echo ""
-    echo "1) Delete F0ile"
-    echo "2) Move F0ile"
-    echo "3) Copy F0ile"
-    echo "4) Rename F0ile"
+    echo "1) Delete File"
+    echo "2) Move File"
+    echo "3) Copy File"
+    echo "4) Rename File"
     echo "5) Back"
     echo ""
     read -n 1 -p "Select Option: " ACTION3
-    cd Handshake
+    cd "$PERM_DIR"/Captured-Packets
     if [ -z $ACTION3 ]
     then
     echo ""
@@ -818,30 +815,31 @@ edit-packets-action() {
     rm "$CHOSEN_FILE3"
     cd ..
     echo ""
-    echo "F0ile has been deleted"
+    echo "File has been deleted"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION3 == 2 ]
     then
     mv "$CHOSEN_FILE3" ~
     cd ..
-    echo "F0ile has been moved to root directory"
+    echo ""
+    echo "File has been moved to root directory"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION3 == 3 ]
     then
     cp "$CHOSEN_FILE3" ~
     cd ..
     echo ""
-    echo "F0ile has been copied to root directory"
+    echo "File has been copied to root directory"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION3 == 4 ]
     then
     rename3() {
         clear
         echo ""
-        read -p "Enter F0ile Name: " NEWNAME
+        read -p "Enter File Name: " NEWNAME
         if [ -z $NEWNAME ]
         then
         echo ""
@@ -851,9 +849,9 @@ edit-packets-action() {
         else
         mv "$CHOSEN_FILE3" "$NEWNAME"
         cd ..
-        echo "F0ile now named $NEWNAME"
+        echo "File has been renamed"
         sleep 2
-        main-menu
+        edit-menu
         fi
     }
     rename3
@@ -869,11 +867,10 @@ edit-packets-action() {
 }
 
 edit-password() {
-    cd Handshake
-    ls -1 | grep -v "temp.txt" > temp.txt
+    cd "$PERM_DIR"/Password-List
+    ls *.txt -1 | grep -v "temp.txt" > temp.txt
     mapfile -t FILE4 <temp.txt
     rm temp.txt
-    cd ..
     show-results-4
     edit-password-action
 }
@@ -881,19 +878,18 @@ edit-password() {
 show-results-4() {
     clear
     figlet Edit PMKIDs
-    echo -e "\e[0;36m----------------------\e[0m \e[1;33mSelect a F0ile to Edit\e[0m \e[0;36m---------------------\e[0m"
+    echo -e "\e[0;36m----------------------\e[0m \e[1;33mSelect a File to Edit\e[0m \e[0;36m---------------------\e[0m"
     echo ""
-    if [ ! -z ${FILE[20]} ]
+    if [ ! -z ${FILE4[20]} ]
     then
     echo -e "\e[1;31mWARNING:\e[0m Some files are not being displayed"
     echo ""
     fi
     if [ -z ${FILE4[0]} ]
     then
-    echo ""
-    echo "No F0iles Found!"
+    echo "No Files Found!"
     sleep 2
-    main-choice-4
+    edit-menu
     else 
     echo "1) ${FILE4[0]}"
     fi
@@ -1046,11 +1042,11 @@ show-results-4() {
     CHOSEN_FILE4=${FILE4[19]}
     elif [ $SELECT4 == 0 ]
     then
-    main-choice-4
+    edit-menu
     
     elif [ $SELECT4 == 0 ]
     then
-    main-choice-4
+    edit-menu
 
     else
     echo ""
@@ -1075,14 +1071,14 @@ edit-password-action() {
     echo ""
     echo -e "\e[0;36m---------\e[0m \e[1;33mChoose Action\e[0m \e[0;36m--------\e[0m"
     echo ""
-    echo "1) Delete F0ile"
-    echo "2) Move F0ile"
-    echo "3) Copy F0ile"
-    echo "4) Rename F0ile"
+    echo "1) Delete File"
+    echo "2) Move File"
+    echo "3) Copy File"
+    echo "4) Rename File"
     echo "5) Back"
     echo ""
     read -n 1 -p "Select Option: " ACTION4
-    cd Handshake
+    cd "$PERM_DIR"/Password-List
     if [ -z $ACTION4 ]
     then
     echo ""
@@ -1094,30 +1090,30 @@ edit-password-action() {
     rm "$CHOSEN_FILE4"
     cd ..
     echo ""
-    echo "F0ile has been deleted"
+    echo "File has been deleted"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION4 == 2 ]
     then
     mv "$CHOSEN_FILE4" ~
     cd ..
-    echo "F0ile has been moved to root directory"
+    echo "File has been moved to root directory"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION4 == 3 ]
     then
     cp "$CHOSEN_FILE4" ~
     cd ..
     echo ""
-    echo "F0ile has been copied to root directory"
+    echo "File has been copied to root directory"
     sleep 2
-    main-menu
+    edit-menu
     elif [ $ACTION4 == 4 ]
     then
     rename4() {
         clear
         echo ""
-        read -p "Enter F0ile Name: " NEWNAME
+        read -p "Enter File Name: " NEWNAME
         if [ -z $NEWNAME ]
         then
         echo ""
@@ -1127,9 +1123,9 @@ edit-password-action() {
         else
         mv "$CHOSEN_FILE4" "$NEWNAME"
         cd ..
-        echo "F0ile now named $NEWNAME"
+        echo "File has been renamed"
         sleep 2
-        main-menu
+        edit-menu
         fi
     }
     rename4

@@ -261,8 +261,8 @@ wireshark-check() {
     echo ""
     echo -e "\e[1;36mNOTE:\e[0m You need a GUI to open in Wireshark"
     echo ""
-    echo "1) View file in Wireshark"
-    echo "2) Exit"
+    echo "1) Open in Wireshark"
+    echo "2) Save and Exit"
     echo ""
     read -n 1 -p "Select Option: " PATH3
 
