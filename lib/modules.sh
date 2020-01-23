@@ -28,8 +28,8 @@ capture-pmkid() {
     clear
     hcxdumptool -i "$INTERFACE" -o "$FILE1".pcapng --enable_status=1 -c "$CHANNEL1"
     hcxpcaptool -E essidlist -I identitylist -U usernamelist -z "$FILE1".16800 "$FILE1".pcapng
-    rm "$FILE1".pcapng PMKID
-    mv "$FILE1".16800 PMKID
+    rm $FILE1.pcapng PMKID
+    mv $FILE1.16800 PMKID
     rm -R identitylist 2>/dev/null
     rm -R essidlist 2>/dev/null
     sleep 1
@@ -62,10 +62,10 @@ capture-handshake() {
     read -n 1 -r -s -p "Press any button to begin capture..."
     airodump-ng -c$CHANNEL2 -w "$FILE2" -d "$BSSID2" "$INTERFACE"
     clear
-    rm "$FILE2"-01.csv
-    rm "$FILE2"-01.kismet.csv
-    rm "$FILE2"-01.kismet.netxml
-    rm "$FILE2"-01.log.csv
+    rm $FILE2-01.csv
+    rm $FILE2-01.kismet.csv
+    rm $FILE2-01.kismet.netxml
+    rm $FILE2-01.log.csv
     mv $FILE2-01.cap $FILE2.cap
     mv $FILE2.cap Handshake
     echo "Processing"
