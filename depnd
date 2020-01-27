@@ -2,7 +2,7 @@
 
 apt-get update
 apt-get install -f
-apt list --installed > temp.txt
+apt list --installed > temp.txt 2>/dev/null
 slowhttptest_check=$(cat temp.txt | grep "slowhttptest/")
 if [ -z $slowhttptest_check ]; then apt install slowhttptest -y; fi
 figlet_check=$(cat temp.txt | grep "figlet/")
