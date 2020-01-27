@@ -1,6 +1,5 @@
 #!/bin/bash
 
-current_dir=$(pwd)
 apt-get update
 apt-get install -f
 apt list --installed > temp.txt
@@ -20,3 +19,5 @@ hashcat_check=$(cat temp.txt | grep "hashcat/")
 if [ -z $hashcat_check ]; then apt install hashcat -y; fi
 aircrack_check=$(cat temp.txt | grep "aircrack-ng/")
 if [ -z aircrack_check ]; then apt install aircrack-ng -y; fi
+rm temp.txt
+
