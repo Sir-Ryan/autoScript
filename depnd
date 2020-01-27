@@ -1,10 +1,22 @@
 #!/bin/bash
 
+current_dir=$(pwd)
 apt-get update
-apt-get autoremove -y
-apt-get autoclean -y
-dpkg --configure -a
-apt-get update --fix-missing
 apt-get install -f
-apt-get update
-apt-get install slowhttptest -y
+apt list --installed > temp.txt
+slowhttptest_check=$(cat temp.txt | grep "slowhttptest/")
+if [ -z $slowhttptest_check ]; then apt install slowhttptest -y; fi
+figlet_check=$(cat temp.txt | grep "figlet/")
+if [ -z $figlet_check ]; then apt install figlet -y; fi
+libpcap_check=$(cat temp.txt | grep "libpcap-dev/")
+if [ -z $libpcap_check ]; then apt install libpcap -y; fi
+libssl_dev_check=$(cat temp.txt | grep "libssl-dev/")
+if [ -z $libssl_dev_check ]; then apt install libssl-dev -y; fi
+zlib1g_dev_check=$(cat temp.txt | grep "zlib1g-dev/")
+if [ -z $zlib1g_dev_check ]; then apt install zlib1g-dev -y; fi
+libcurl4_openssl_dev_check=$(cat temp.txt | grep "libcurl4-openssl-dev/")
+if [ -z $libcurl4_openssl_dev_check ]; then apt install libcurl4-openssl-dev -y; fi
+hashcat_check=$(cat temp.txt | grep "hashcat/")
+if [ -z $hashcat_check ]; then apt install hashcat -y; fi
+aircrack_check=$(cat temp.txt | grep "aircrack-ng/")
+if [ -z aircrack_check ]; then apt install aircrack-ng -y; fi
