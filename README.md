@@ -13,9 +13,6 @@ Installation is simple just download or clone the repository and in the folder r
     cd autoScript
     bash ./install
 
-## Contact
-If you have any questions or suggestions about autoScript please feel free to contact me at tree.autoScript@gmail.com
-
 ## Use
 The autoScript commands are:
 
