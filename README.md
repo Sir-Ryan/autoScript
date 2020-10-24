@@ -1,3 +1,5 @@
+> **Please note that this was made a long time ago befor ei new how to code properly, i dont encoyrage anyone to use this**
+
                  _       ____            _       _
       __ _ _   _| |_ ___/ ___|  ___ _ __(_)_ __ | |_
      / _` | | | | __/ _ \___ \ / __| '__| | '_ \| __|
@@ -6,6 +8,8 @@
                                           |_|
 
 **autoScript** is a Linux program, specifically designed for Kali Linux, that takes common WiFi attacks and automates them into one easy to use program.
+
+
 
 ## Install
 Installation is simple just download or clone the repository and in the folder run:
