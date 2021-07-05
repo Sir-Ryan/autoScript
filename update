@@ -1,5 +1,5 @@
 #!/bin/bash
-
+CURRENT_DIR=$(pwd)
 clear
 git clone https://github.com/Treebug842/autoScript.git
 rm -r lib
@@ -7,12 +7,21 @@ cd autoScript
 mv depnd ..
 mv lib ..
 mv autoScript.sh ..
+chmod +x autoScript
+mv autoScript /bin
 mv update ..
 mv README.md ..
+mv EULA.txt ..
+mv LICENSE.txt ..
+mv uninstall.sh ..
 cd ..
 chmod +x update
 chmod +x autoScript.sh
 chmod +x depnd
+chmod +x uninstall.sh
 rm -r autoScript
 ./depnd
-cd
+cd "$CURRENT_DIR"
+clear
+echo "autoScript has been updated"
+echo ""

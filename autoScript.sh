@@ -17,7 +17,7 @@ interface-error-check() {
     if [ -z $INTERFACE ]
     then
     echo ""
-    echo "Error Network Adapter Not Found"
+    echo "Error Network Adapter Not Valid"
     sleep 2
     moniter-mode
     fi
@@ -134,6 +134,7 @@ moniter-mode() {
 
     elif [ $INTERFACE == 0 ]
     then
+    cd "$START_DIR"
     clear
     exit
 
@@ -145,21 +146,19 @@ moniter-mode() {
     moniter-mode
     fi
 
+    clear
+    echo "Processing..."
     interface-error-check
-
-    ifconfig $INTERFACE down
-    iwconfig $INTERFACE mode moniter
-    ifconfig $INTERFACE up
 }
 
-main-menue() {
+main-menu() {
 heading
 echo -e "\e[0;36m---------------\e[0m \e[1;33mMade by Treebug842\e[0m \e[0;36m---------------\e[0m"
 echo ""
 echo "1) WiFi Cracking"
 echo "2) Network Recon"
-echo "3) Griefing"
-echo "4) Other Programs"
+echo "3) DOS Attacks"
+echo "4) Other Options"
 echo "5) Exit"
 echo ""
 read -n 1 -p "Select Option: " MAIN
@@ -168,7 +167,7 @@ then
 echo ""
 echo "Cannot leave blank"
 sleep 2
-exec bash "$0" "$@"
+main-menu
 
 elif [ $MAIN == 1 ]
 then
@@ -188,6 +187,7 @@ main-choice-4
 
 elif [ $MAIN == 5 ]
 then
+cd "$START_DIR"
 clear
 exit
 
@@ -196,9 +196,87 @@ echo ""
 echo ""
 echo "Not an Option"
 sleep 2
-exec bash "$0" "$@"
+main-menu
 fi
 }
 
+license-edit() {
+    clear
+    cat EULA.txt | cut -d"-" -f1
+    read -p "-Do you agree with the above conditions (yes/no): " USER_INPUT
+    if [ -z $USER_INPUT ]
+    then
+    echo ""
+    echo "You cannot leave blank"
+    sleep 2
+    license-edit
+    elif [ "$USER_INPUT" == "no" ]
+    then
+    echo ""
+    echo "You must agree to the EULA before you are able to use autoScript"
+    sleep 2
+    clear
+    exit
+    elif [ "$USER_INPUT" == "yes" ]
+    then
+    sed -i '$ d' EULA.txt
+    echo "-Do you agree with the above conditions (yes/no): yes" >> EULA.txt
+    else
+    echo ""
+    echo "Option not supported"
+    sleep 2
+    license-edit
+    fi
+}
+
+license-check() {
+    clear
+    cd $PERM_DIR
+    ANSWER=$(cat EULA.txt | grep ":" | cut -d":" -f2)
+    if [ "$ANSWER" == " no" ]
+    then
+    echo "You must agree to the EULA first"
+    sleep 2
+    license-edit
+    elif [ "$ANSWER" == " yes" ]
+    then
+    echo ""
+    #License check passed
+    else
+    echo ""
+    echo "Invalid answer written in autoScript EULA"
+    echo "Answer must not contain capital letters"
+    echo ""
+    read -n 1 -r -s 
+    exit
+    fi
+    cd "$START_DIR"
+}
+
+verification() {
+    EULA_CHECKSUM=$(sha256sum EULA.txt | cut -d" " -f1)
+    LICENSE_CHECKSUM=$(sha256sum LICENSE.txt | cut -d" " -f1)
+    if [ "$EULA_CHECKSUM"  != "afd5444ad9e322e566c97d9a88cf3f1ad7704615b2d3f28a633766fa1c628c3f" ]
+    then
+    echo "The EULA file has been tampered with!"
+    sleep 2
+    clear 
+    cd "$START_DIR"
+    exit
+    fi
+    if [ "$LICENSE_CHECKSUM" != "605e9047a563c5c8396ffb18232aa4304ec56586aee537c45064c6fb425e44ad" ]
+    then
+    echo "The LICENSE file has been tampered with!"
+    sleep 2
+    clear
+    cd "$START_DIR"
+    exit
+    fi
+}
+
+START_DIR=$(pwd)
+license-check
+verification
 moniter-mode
-main-menue
+clear
+main-menu

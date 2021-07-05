@@ -1,14 +1,28 @@
 
 #!/bin/bash
+CURRENT_DIR=$(pwd)
 INPUT=${1:-run}
 if [ $INPUT == run ]
 then
-cd ~/Programs/autoScript
+cd $PERM_DIR
 ./autoScript.sh
 elif [ $INPUT == update ]
 then
-cd ~/Programs/autoScript
+cd $PERM_DIR
 ./update
+elif [ $INPUT == uninstall ]
+then
+cd $PERM_DIR
+./uninstall.sh
+elif [ $INPUT == help ]
+then
+cd "$PERM_DIR"
+cat README.md
+cd "$CURRENT_DIR"
+elif [ $INPUT == --help ]
+then
+cd $PERM_DIR
+./autoScript.sh
 else
 echo "Not an Option"
 fi

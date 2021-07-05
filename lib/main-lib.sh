@@ -76,7 +76,7 @@ main-choice-2() {
 
     elif [ $PATH2 == 3 ]
     then
-    nmap-scan
+    port-scan
 
     elif [ $PATH2 == 4 ]
     then
@@ -97,10 +97,10 @@ main-choice-2() {
 
 main-choice-3() {
     heading
-    echo -e "\e[0;36m--------------------\e[0m \e[1;33mGriefing\e[0m \e[0;36m--------------------\e[0m"
+    echo -e "\e[0;36m-------------------\e[0m \e[1;33mDOS Attacks\e[0m \e[0;36m-------------------\e[0m"
     echo ""
-    echo "1) DDOS IP Adress"
-    echo "2) DDOS Website"
+    echo "1) DDOS IP Address"
+    echo "2) Slowloris attack"
     echo "3) Deauth Local Network"
     echo "4) Deauth Local Device"
     echo "5) Back"
@@ -119,7 +119,7 @@ main-choice-3() {
 
     elif [ $PATH3 == 2 ]
     then
-    ddos-website
+    slowloris-attack
 
     elif [ $PATH3 == 3 ]
     then
@@ -144,11 +144,13 @@ main-choice-3() {
 
 main-choice-4() {
     heading
-    echo -e "\e[0;36m-----------------\e[0m \e[1;33mOther Programs\e[0m \e[0;36m-----------------\e[0m"
+    echo -e "\e[0;36m-----------------\e[0m \e[1;33mOther Options\e[0m \e[0;36m-----------------\e[0m"
     echo ""
-    echo "1) Run RouterSploit"
+    echo "1) File Manager"
     echo "2) Run Airgeddon"
-    echo "3) Back"
+    echo "3) Run RouterSploit"
+    echo "4) Update autoScript"
+    echo "5) Back"
     echo ""
     read -n 1 -p "Select Option: " PATH4
     if [ -z $PATH4 ]
@@ -160,13 +162,21 @@ main-choice-4() {
 
     elif [ $PATH4 == 1 ]
     then
-    router-sploit
+    edit-files
 
     elif [ $PATH4 == 2 ]
     then
     airgeddon-void
 
     elif [ $PATH4 == 3 ]
+    then
+    router-sploit
+
+    elif [ $PATH4 == 4 ]
+    then
+    autoScript update
+
+    elif [ $PATH4 == 5 ]
     then
     main-menu
 
